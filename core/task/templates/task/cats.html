@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="cat_content categories" >    
+    <div class="">
+        <div class="content">
+            <div class="welcome">
+                <button id="openbutton" class="openbtn" >&#9776;</button>
+                <span class="welcome-text">Manage Your Category List</span> 
+            </div>
+
+            <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="inputContainer Cat">
+                    {{ form.name.label }}<br>
+                    {{ form.name(size=20) }}
+                    {% for error in form.name.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="buttons">   
+                    {{ form.submit(class="catAdd btn") }}
+                </div> 
+            </form>
+            <!-- Task Delete Error alert -->
+            {% if check %}
+                <div class="alert alert-warning" role="alert">
+                    <span class="closebtns" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{check}}
+                </div>
+            {% endif %}
+            <!-- End Task Delete error alert -->
+
+            <form action="" method="post">
+              {{ form.hidden_tag() }} <!-- csrf token for security -->
+              <div class="tabs effect-1">
+                 <!-- tab-content -->
+                <div class="tab-content">
+                  <section id="tab-item-1">
+                      <ul class="catList">        
+                          {% for cat in cats %} 
+                          <li class="currentCatItem">
+                              <input type="checkbox" class="catCheckbox" name="checkedbox" id="{{ cat.id }}" value="{{ cat.id }}" >
+                              <label for="{{ cat.id }}"><span class="complete-">{{ cat.name }}</span></label>
+                              <button class="catDelete " name="catDelete" formnovalidate="" type="submit" >X<i class="fa fa-trash-o icon"></i></button>
+                          </li>     
+                          {% endfor %}
+                      </ul> <!--end All-Cats-List -->
+                  </section>
+                </div><!-- end tab content -->
+              </div><!-- end tab effect -->
+            </form>
+        </div><!-- end content -->
+
+    </div><!-- container -->
+</div>
+{% endblock %}
